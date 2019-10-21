@@ -19,10 +19,9 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': { view: 'pages/homepage' },
-  'post /user/signup' : 'UserController.signup',
-  'post /user/login' : 'UserController.login'
-
+  // '/': { view: 'pages/homepage' },
+  'post /users/signup': 'UserController.signup',
+  'post /users/login': 'UserController.login',
 
   /***************************************************************************
   *                                                                          *
@@ -35,5 +34,12 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
+  'post /categories': 'CategoryController.createCategory',
+  'get /categories': 'CategoryController.getCategories',
+  'get /categories/:name': 'CategoryController.getCategoryById',
 
+
+  'post /articles': 'ArticleController.createArticle',
+  'get /articles': 'ArticleController.getArticles',
+  'get /articles/:username': 'ArticleController.getArticlesByAuthor'
 };

@@ -4,11 +4,16 @@
  * @description :: A model definition represents a database table/collection.
  * @docs        :: https://sailsjs.com/docs/concepts/models-and-orm/models
  */
- var bcrypt = require('bcrypt');
+var bcrypt = require('bcrypt');
 
 module.exports = {
 
   attributes: {
+    'username': {
+      type: 'string',
+      required: true,
+      unique: true
+    },
     'firstname': {
       type: 'string',
       required: true
@@ -18,27 +23,31 @@ module.exports = {
     },
     'email': {
       type: 'string',
-      isEmail : true,
+      isEmail: true,
       unique: true,
       required: true
     },
     'encryptedPassword': {
       type: 'string'
     },
+    // 'articles': {
+    //   collection: 'article',
+    //   via: 'author'
+    // }
   },
 
-  customToJSON: function() {
+  customToJSON: function () {
     var obj = this;
     delete obj.encryptedPassword;
     return obj;
   },
 
-  beforeCreate: function(values, cb) {
-    if(!values.password || !values.confirmation || values.password != values.confirmation) {
-      return cb({err: ["Password does not match confirmation"]});
+  beforeCreate: function (values, cb) {
+    if (!values.password || !values.confirmation || values.password != values.confirmation) {
+      return cb({ err: ["Password does not match confirmation"] });
     }
     // Hash password
-    bcrypt.hash(values.password, 10, function(err, hash) {
+    bcrypt.hash(values.password, 10, function (err, hash) {
       if (err) return cb(err);
       values.encryptedPassword = hash;
 

@@ -14,6 +14,10 @@ module.exports = {
      rest: false
   },
 
+  check: function(req, res) {
+        return res.json();
+    },
+
   signup: function(req, res) {
     User.create(req.body).exec(function(err, user) {
       if (err) {
@@ -30,7 +34,7 @@ module.exports = {
         err: "Email or password cannot be empty"
       });
     }
-    //Find the user from email
+    //Find user by email
     User.findOne({
       email: req.body.email
     }).exec(function(err, user) {
